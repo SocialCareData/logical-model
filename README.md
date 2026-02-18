@@ -87,7 +87,9 @@ Open question: could the primary key for the professional be their email or some
 
 The following diagram represents the relationships between the core entities. Note that links are modeled as "Association Objects" that contain both a reference and a role.
 
-```mermaid
+DIAGRAM COMMMENTED OUT BECAUSE IT'S NOT GREAT RN
+
+<!-- ```mermaid
 classDiagram
     class Person {
         +Identifier[] id
@@ -128,6 +130,6 @@ classDiagram
     Event "0..*" --> "1" Person : subject
     Event "0..*" --> "1" Professional : involved
     Episode "0..*" --> "1" Person : subject
-```
+``` -->
 
 
