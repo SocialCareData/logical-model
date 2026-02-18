@@ -87,49 +87,26 @@ Open question: could the primary key for the professional be their email or some
 
 The following diagram represents the relationships between the core entities. Note that links are modeled as "Association Objects" that contain both a reference and a role.
 
-DIAGRAM COMMMENTED OUT BECAUSE IT'S NOT GREAT RN
-
-<!-- ```mermaid
+```mermaid
 classDiagram
     class Person {
-        +Identifier[] id
-        +Name name
-        +DateOfBirth dob
-        +RelatedPerson[] relatedPeople
-        +RelatedProfessional[] relatedProfessionals
     }
     class Professional {
-        +Identifier[] id
-        +Name name
-        +Role role
-        +Link[] relatedServices
     }
     class Service {
-        +Identifier[] id
-        +Name name
-        +Link[] relatedProfessionals
     }
     class Event {
-        +Identifier id
-        +Type type
-        +Link subjectPerson
-        +Link relatedProfessional
-        +Link relatedService
     }
     class Episode {
-        +Identifier id
-        +Link subjectPerson
-        +Link relatedProfessional
-        +Link relatedService
     }
 
-    Person "1" --> "0..*" Person : relatedPerson (Role)
-    Person "1" --> "0..*" Professional : relatedProfessional (Role)
-    Professional "1" --> "0..*" Service : relatedService (Employer)
-    Service "1" --> "0..*" Professional : relatedProfessional (Staff)
-    Event "0..*" --> "1" Person : subject
-    Event "0..*" --> "1" Professional : involved
-    Episode "0..*" --> "1" Person : subject
-``` -->
+    Person "1" --> "0..*" Person : relatedPerson
+    Person "1" --> "0..*" Professional : relatedProfessional
+    Professional "1" --> "0..*" Service : relatedService
+    Service "1" --> "0..*" Professional : relatedProfessional
+    Event "0..*" --> "1" Person : subjectPerson
+    Event "0..*" --> "1" Professional : relatedProfessional
+    Episode "0..*" --> "1" Person : subjectPerson
+```
 
 
