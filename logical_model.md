@@ -87,4 +87,4 @@ Open question: could the primary key for the professional be their email or some
 
 The following diagram represents the relationships between the core entities. Note that links are modeled as "Association Objects" that contain both a reference and a role.
 
-![logical model](logical_model.drawio.png) 
+![logical model](https://github.com/SocialCareData/logical-model/blob/main/logical_model.drawio.png?raw=true) 
