@@ -6,10 +6,10 @@ This document defines the conceptual framework for the Multi-Agency Information 
 
 To ensure consistency across all standards, we adopt the following definitions:
 
-### A. Identifier (The "Business Key")
+### A. Identifier
 An **Identifier** is a tuple (e.g., `value`, `system`) that identifies a person or entity in the physical world (NHS Number, NI Number, UPRN).
 - **Usage:** Used for *matching* records across different agency systems.
-- **Limitation:** A person might have multiple identifiers, or an identifier might change.
+- **Note:** A person might have multiple identifiers, or an identifier might change.
 
 ### B. Reference / Ref (The "Pointer")
 A **Reference** (or `ref`) is a logical pointer from one record to another.
@@ -18,7 +18,7 @@ A **Reference** (or `ref`) is a logical pointer from one record to another.
 
 ### C. Link (The "Relationship")
 We use **Link** as a data type in our schemas to indicate that a field is a reference.
-- **Standard:** Every `Link` field should contain a `ref` (the URI) and optionally a small snippet of data (like a name) to provide context without a lookup.
+- **Standard:** Every `Link` field should contain a `ref` (the URI) and, optionally, a predicate that describes the nature of the link (the relationship).
 
 ---
 
@@ -39,7 +39,7 @@ If Person A is the "Foster Carer" of Person B:
 3. `relationship`: "Foster Carer" (This implies A -> B).
 
 **Handling Inverse:**
-In a graph, we would like to store the inverse for easier querying. 
+In a graph, we would like to store the inverse for easier querying. This wouldn't be easy to actually implement. 
 - Person B's record: `ref`: [Link to Person A], `relationship`: "Foster Child".
 - In fact, ideally, the relationship would be $($ Foster Carer $)^{-1}$ which is parsed as Foster Child. But I don't know if that's a real thing.
 
@@ -69,8 +69,8 @@ This was the only means of describing relationships that felt semantically corre
 ## 3. The Multi-Agency Graph
 
 The MAIS infrastructure is, in essence, a **Distributed Graph**.
-- **Nodes:** Reside in different systems (Health, Police, LA).
-- **Edges (Links):** Connect these nodes within and across system boundaries.
+- **Nodes:** Records of persons, professionals, events and episodes that reside in different systems (Health, Police, LA).
+- **Edges (Links):** Connect these nodes within (and across?) system boundaries.
 
 ### Summary of Logical Entities
 | Entity | Description | Primary Key |
@@ -80,8 +80,6 @@ The MAIS infrastructure is, in essence, a **Distributed Graph**.
 | **Service** | An organisation or team. | `Service.Identifier` |
 | **Episode** | A duration of involvement. | `Episode.Identifier` |
 | **Event** | A point-in-time occurrence. | `Event.Identifier` |
-
-Open question: could the primary key for the professional be their email or something?
 
 ## 4. Visualizing the Logical Model
 
