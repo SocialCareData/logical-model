@@ -39,9 +39,10 @@ If Person A is the "Foster Carer" of Person B:
 3. `relationship`: "Foster Carer" (This implies A -> B).
 
 **Handling Inverse:**
-In a graph, we would like to store the inverse for easier querying. This wouldn't be easy to actually implement. 
-- Person B's record: `ref`: [Link to Person A], `relationship`: "Foster Child".
-- In fact, ideally, the relationship would be $($ Foster Carer $)^{-1}$ which is parsed as Foster Child. But I don't know if that's a real thing.
+In a distributed graph, requiring each system to record both sides of a relationship (e.g., A is Mother of B, AND B is Child of A) creates synchronization risks. Instead, we rely on **directional assertions** that are resolved by **vocabulary inverses** at the application layer.
+- **Assertion:** Record A contains a link to Record B with the predicate "Foster Carer".
+- **Resolution:** The system's controlled vocabulary (e.g., SNOMED/FHIR) defines that the inverse of "Foster Carer" is "Foster Child".
+- **Discovery:** A "Single View" application discovers relationships by querying for all edges pointing *to* a specific URI, as well as those originating *from* it.
 
 ### The Rule of Thumb:
 > When a link exists inside **Person A's** record, the `relationship` field describes the **Role** that the **Referenced Entity** plays in Person A's life.
@@ -75,7 +76,8 @@ The MAIS infrastructure is, in essence, a **Distributed Graph**.
 ### Summary of Logical Entities
 | Entity | Description | Primary Key |
 | :--- | :--- | :--- |
-| **Person** | An individual (Child/Adult). | `Person.Identifier` |
+| **Person** | An individual (Child/Adult) with a full demographic record. | `Person.Identifier` |
+| **ConnectedPerson** | A peripheral individual with minimal, often unverified, demographic data. | `ConnectedPerson.Name` |
 | **Professional** | A practitioner (Social Worker, GP). | `Professional.Identifier` |
 | **Service** | An organisation or team. | `Service.Identifier` |
 | **Episode** | A duration of involvement. | `Episode.Identifier` |
